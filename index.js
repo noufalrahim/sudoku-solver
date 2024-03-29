@@ -8,7 +8,7 @@ app.use(cors());
 
 const PORT = 5500;
 
-app.get("/solver", (req, res) => {
+app.get("/sudoku/solver/exampleresponse", (req, res) => {
     const matrix = [
         [8, 0, 0, 0, 0, 0, 0, 0, 0],
         [0, 0, 3, 6, 0, 0, 0, 0, 0],
@@ -29,6 +29,17 @@ app.get("/solver", (req, res) => {
     });
 });
 
+app.post("/sudoku/solver", (req, res) => {
+    
+    const matrix = req.body.board;
+    const resultStatus = solver(matrix);
+    console.log(matrix);
+    res.send({
+        solved: resultStatus,
+        board: matrix
+    });
+});
+
 app.listen(`${PORT}`, () => {
-    console.log("Server is running on port 5500");
+    console.log(`Server is running on port ${PORT}`);
 });
