@@ -1,10 +1,15 @@
 import express from "express";
 import cors from "cors";
 import solver from "./Solver.js";
-
+import bodyParser from "body-parser";
 
 const app = express();
 app.use(cors());
+
+app.use(cors({
+    origin: 'http://localhost:8081'
+}));
+app.use(bodyParser.json());
 
 const PORT = 5500;
 
@@ -30,9 +35,11 @@ app.get("/sudoku/solver/exampleresponse", (req, res) => {
 });
 
 app.post("/sudoku/solver", (req, res) => {
-    
     const matrix = req.body.board;
+    console.log("Matrix - Initial")
+    console.log(matrix);
     const resultStatus = solver(matrix);
+    console.log("Matrix - Final")
     console.log(matrix);
     res.send({
         solved: resultStatus,
